@@ -1,5 +1,5 @@
 <?php
-namespace PluginPlaceholder\Includes;
+namespace AudioPlaylistWoo\Includes;
 
 class Loader
 {
@@ -8,8 +8,8 @@ class Loader
 
 	public function __construct()
 	{
-		$this->plugin_version = defined('PLUGIN_PLACEHOLDER_VERSION') ? PLUGIN_PLACEHOLDER_VERSION : '1.0.0';
-		$this->plugin_name = 'plugin-placeholder';
+		$this->plugin_version = defined('AUDIOPLAYLISTWOO_VERSION') ? AUDIOPLAYLISTWOO_VERSION : '1.0.0';
+		$this->plugin_name = 'audio-playlist-woo';
 		$this->load_dependencies();
 
 		add_action('plugins_loaded', [$this, 'load_plugin_textdomain']);
@@ -17,8 +17,8 @@ class Loader
 
 	private function load_dependencies()
 	{
-		foreach (glob(PLUGIN_PLACEHOLDER_PATH . 'Functionality/*.php') as $filename) {
-			$class_name = '\\PluginPlaceholder\Functionality\\'. basename($filename, '.php');
+		foreach (glob(AUDIOPLAYLISTWOO_PATH . 'Functionality/*.php') as $filename) {
+			$class_name = '\\AudioPlaylistWoo\Functionality\\'. basename($filename, '.php');
 			if (class_exists($class_name)) {
 				try {
 					new $class_name($this->plugin_name, $this->plugin_version);
@@ -33,6 +33,6 @@ class Loader
 
 	public function load_plugin_textdomain()
 	{
-		load_plugin_textdomain('plugin-placeholder', false, PLUGIN_PLACEHOLDER_BASENAME . '/languages/');
+		load_plugin_textdomain('audio-playlist-woo', false, AUDIOPLAYLISTWOO_BASENAME . '/languages/');
 	}
 }

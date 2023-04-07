@@ -1,6 +1,6 @@
 <?php
 
-namespace PluginPlaceholder\Includes;
+namespace AudioPlaylistWoo\Includes;
 
 use Jenssegers\Blade\Blade;
 
@@ -11,7 +11,7 @@ class BladeLoader
 
 	private function __construct()
 	{
-		$this->blade = new Blade(PLUGIN_PLACEHOLDER_PATH . 'resources/views', PLUGIN_PLACEHOLDER_PATH . 'resources/cache');
+		$this->blade = new Blade(AUDIOPLAYLISTWOO_PATH . 'resources/views', AUDIOPLAYLISTWOO_PATH . 'resources/cache');
 	}
 
 	// Clone not allowed
