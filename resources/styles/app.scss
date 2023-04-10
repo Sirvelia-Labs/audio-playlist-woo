@@ -4,27 +4,28 @@
 /** Import global styles */
 @import "common/global";
 
-  #sirvelia-player .player-playlist li.active span {
-    @apply pb-text-blue-300;
-  }
+#sirvelia-player .player-playlist li.active span {
+  @apply pb-text-blue-300;
+}
 
-  #sirvelia-player #playlist-time-range {
-    border: none;
-    height: 0.1rem;
-    color: white;
-    background: white;
-    border-radius: 0.5rem;
-    width: 500px;
-    max-width: 100%;
-  }
-  #sirvelia-player #playlist-volume-range {
-    border: none;
-    height: 0.1rem;
-    color: white;
-    background: white;
-    border-radius: 0.5rem;
-    width: 100px;
-    max-width: 100%;
-    margin-right: 5px;
-  }
+#sirvelia-player #playlist-time-range {
+  border: none;
+  height: 0.1rem;
+  color: white;
+  background: transparent;
+  border-radius: 0.5rem;
+  width: 500px;
+  max-width: 100%;
+}
+#sirvelia-player #playlist-volume-range {
+  border: none;
+  height: 0.1rem;
+  color: white;
+  background: transparent;
+  border-radius: 0.5rem;
+  width: 100px;
+  max-width: 100%;
+  margin-right: 5px;
+}
+  
   

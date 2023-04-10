@@ -7,6 +7,7 @@ class Lyfecycle
 	public static function activate()
 	{
 		do_action('AudioPlaylistWoo/setup');
+		add_option( '_apfw_background_color', '#000000' );
 	}
 
 	public static function deactivate()
@@ -16,5 +17,6 @@ class Lyfecycle
 	public static function uninstall()
 	{
 		do_action('AudioPlaylistWoo/cleanup');
+		delete_option( '_apfw_background_color' );
 	}
 }

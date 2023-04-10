@@ -445,14 +445,18 @@ export default {
         for (let i = json.length - 1; i >= 0; i--) {
           let songUrl = json[i].url;
           if($.inArray(songUrl, songsUrls) === -1) { // SONG NOT IN QUEUE
-            $('#sirvelia-player .player-playlist').prepend(`<li class="playlist-item">
-              <span class="song-info">
-                <a class="song" href="` + songUrl + `">
+            $('#sirvelia-player .player-playlist').prepend(`<li class="playlist-item pb-flex pb-justify-between pb-items-center">
+              <span class="song-info pb-flex pb-items-center pb-gap-2 pb-border-b pb- pb-border-0 pb-border-b-gray-200">
+                <a class="song pb-text-white hover:pb-gray-200 pb-no-underline" href="` + songUrl + `">
                   <span class="song-title">` + json[i].title + `</span>
                 </a>
-                <a href="` + json[i].productUrl + `" class="view-song">` + AudioPlaylistForWoocommerceStrings.view + `</a>
+                <a href="` + json[i].productUrl + `" class="view-song pb-text-white">` + AudioPlaylistForWoocommerceStrings.view + `</a>
               </span>
-              <a href="#" class="remove-song">remove</a>
+              <a href="#" title="` + AudioPlaylistForWoocommerceStrings.remove + `" class="remove-song pb-flex pb-text-white hover:pb-gray-200 pb-no-underline">
+                <svg class="pb-text-red-500 pb-w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6"></path>
+                </svg>
+              </a>
             </li>`);
           }
     

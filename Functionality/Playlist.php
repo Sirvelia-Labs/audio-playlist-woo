@@ -1,20 +1,25 @@
 <?php
 namespace AudioPlaylistWoo\Functionality;
 
+use AudioPlaylistWoo\Includes\BladeLoader;
+
 class Playlist
 {
 
 	protected $plugin_name;
 	protected $plugin_version;
 
+	private $blade;
+
 	public function __construct($plugin_name, $plugin_version)
 	{
 		$this->plugin_name = $plugin_name;
 		$this->plugin_version = $plugin_version;
+		$this->blade = BladeLoader::getInstance();
 		
 		pb_script(
 			'audio-playlist-woo', AUDIOPLAYLISTWOO_URL . 'dist/app.js',
-			[$this, 'check_playlist'], 
+			[$this, 'playlist_is_visible'], 
 			['jquery'],
 			[
 				'name' => 'AudioPlaylistForWoocommerceStrings',
@@ -23,19 +28,37 @@ class Playlist
 					'open_playlist' => __( 'Open Playlist', 'audio-playlist-for-woocommerce' ),
 					'close_playlist' => __( 'Close Playlist', 'audio-playlist-for-woocommerce' ),
 					'view' => __( 'Go to product', 'audio-playlist-for-woocommerce' ),
+					'remove' => __( 'Remove song', 'audio-playlist-for-woocommerce' )
 				]
 			]
 		);
 
-		pb_style('audio-playlist-woo', AUDIOPLAYLISTWOO_URL . 'dist/app.css', [$this, 'check_playlist']);
+		pb_style('audio-playlist-woo', AUDIOPLAYLISTWOO_URL . 'dist/app.css', [$this, 'playlist_is_visible']);
 
 		add_action('woocommerce_after_shop_loop_item', [$this, 'show_product_playlist'], 8);
 		add_action('woocommerce_single_product_summary', [$this, 'show_full_product_playlist'], 25);
+		add_action('wp_footer', [$this, 'show_audio_playlist_woocommerce']);
+
+		
 	}
 
-	public function check_playlist()
+	public function playlist_is_visible()
 	{
-		return !is_cart() && !is_checkout();
+		// == Pages not visible
+		$pages_not_visible = carbon_get_theme_option( 'apfw_pages_not_visible' );
+		$pages = [];
+
+		if ( $pages_not_visible ) {
+			$pages = array_map( function($v) {
+				return $v['id'];
+			}, $pages_not_visible );
+
+		}
+
+		if ( is_front_page() && carbon_get_theme_option( 'apfw_hide_front_page' ) == '1' ) return false;
+		if ( is_singular( 'post' ) && carbon_get_theme_option( 'apfw_hide_posts' ) == '1' ) return false;
+		
+		return ( array_search( get_the_ID(), $pages ) !== false ) ? false : true;
 	}
 
 	public function show_product_playlist() {
@@ -108,5 +131,65 @@ class Playlist
 	        else return $btn;
 	      }
 	    }
+	}
+
+	function getPlaylistTime( $time ) {
+		if ( is_string( $time ) ) {
+			$minutes = floor($time / 60);
+			$minutes = ($minutes >= 10) ? $minutes : "0" . $minutes;
+			$seconds = floor($time % 60);
+			$seconds = ($seconds >= 10) ? $seconds : "0" . $seconds;
+			return $minutes . ':' . $seconds;
+		}
+		
+		return false;
+	}
+
+	function lighten( $hexcolor, $percent ) {
+	  if ( strlen( $hexcolor ) < 6 ) {
+	    $hexcolor = $hexcolor[0] . $hexcolor[0] . $hexcolor[1] . $hexcolor[1] . $hexcolor[2] . $hexcolor[2];
+	  }
+	  $hexcolor = array_map('hexdec', str_split( str_pad( str_replace('#', '', $hexcolor), 6, '0' ), 2 ) );
+
+	  foreach ($hexcolor as $i => $color) {
+	    $from = $percent < 0 ? 0 : $color;
+	    $to = $percent < 0 ? $color : 255;
+	    $pvalue = ceil( ($to - $from) * $percent );
+	    $hexcolor[$i] = str_pad( dechex($color + $pvalue), 2, '0', STR_PAD_LEFT);
+	  }
+
+		return '#' . implode($hexcolor);
+	}
+
+	public function show_audio_playlist_woocommerce()
+	{
+		if ( $this->playlist_is_visible() ) {
+			$playlist = '';
+			$color = carbon_get_theme_option( 'apfw_background_color' );
+	
+			if( isset( $_COOKIE["sirvelia-player-playlist"] ))  {
+			  $playlist_cookie = wp_kses_post( $_COOKIE["sirvelia-player-playlist"] );
+			  $playlist = json_decode( html_entity_decode( stripslashes ( $playlist_cookie ) ) );
+			}
+	
+			$time_cookie = isset( $_COOKIE["sirvelia-player-time"] ) ? wp_kses_post( $_COOKIE["sirvelia-player-time"] ) : 0;
+	
+			$active_song = '';
+	
+			if( $playlist ) {
+			  $key = array_search('true', array_column($playlist, 'isActive'));
+			  $active_song = $playlist[$key];
+			}
+	
+		   	echo $this->blade->template('audio-player', [
+				'active_song' 		=> $active_song,
+				'time_cookie' 		=> $time_cookie,
+				'playlist'			=> $playlist,
+				'getPlaylistTime'	=> [$this, 'getPlaylistTime'],
+				'bg_color' => esc_attr( $color ),
+				'alt_color' => esc_attr( $this->lighten( $color, 0.4 ) ),
+				'active_color' => esc_attr( $color, 0.1 )
+			]);
+		  }
 	}
 }

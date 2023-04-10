@@ -1,21 +1,25 @@
-<div id="sirvelia-player" class="pb-fixed pb-w-full pb-left-0 pb-right-0 pb-bottom-0 pb-bg-black pb-z-[9999] pb-text-white pb-pb-2">
+<div id="sirvelia-player" style="background: {{ $bg_color }};" class="pb-fixed pb-w-full pb-left-0 pb-right-0 pb-bottom-0 pb-z-[9999] pb-text-white pb-pb-2">
     <audio class="player-audio" id="player-audio" src="{{ $active_song ? $active_song->url : '' }}" preload="metadata"></audio>
 
-    <div class="playlist-wrapper pb-bg-gray-800" style="display: none">
+    <div class="playlist-wrapper" style="background: {{ $alt_color }}; display: none;">
         <div class="playlist-wrapper-container pb-block pb-relative pb-mx-auto pb-max-w-5xl">
-            <a class="remove-all pb-text-white pb-absolute pb-top-[-40px] pb-right-0 pb-h-10 pb-bg-gray-800 pb-px-4 pb-inline-block" href="#"><?= __('Remove all', 'audio-playlist-for-woocommerce'); ?></a>
+            <a class="remove-all pb-text-white pb-absolute pb-top-[-40px] pb-right-0 pb-h-10 pb-px-4 pb-inline-block" style="background: {{ $alt_color }};" href="#"><?= __('Remove all', 'audio-playlist-for-woocommerce'); ?></a>
 
             <ul class="player-playlist pb-p-0 pb-list-none pb-m-0 pb-max-h-[150px] pb-overflow-y-auto">
                 @if($playlist)
                     @foreach ($playlist as $song)
-                        <li class="pb-flex pb-justify-between playlist-item{{ $song->isActive ? ' active' : '' }}">
+                        <li class="pb-flex pb-justify-between pb-items-center playlist-item{{ $song->isActive ? ' active' : '' }}">
                             <span class="song-info pb-flex pb-items-center pb-gap-2 pb-border-b pb- pb-border-0 pb-border-b-gray-200">
                                 <a class="song pb-text-white hover:pb-gray-200 pb-no-underline" href="{{ $song->url }}">
                                     <span class="song-title">{{ $song->title }}</span>
                                 </a>
                                 <a href="{{ $song->productUrl }}" class="view-song pb-text-white"><?= __('Go to product', 'audio-playlist-for-woocommerce'); ?></a>
                             </span>
-                            <a href="#" class="remove-song pb-text-white hover:pb-gray-200 pb-no-underline"><?= __('remove', 'audio-playlist-for-woocommerce'); ?></a>
+                            <a href="#" title="<?= __('Remove song', 'audio-playlist-for-woocommerce'); ?>" class="remove-song pb-flex pb-text-white hover:pb-gray-200 pb-no-underline">
+                                <svg class="pb-text-red-500 pb-w-6" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 12H6"></path>
+                                </svg>
+                            </a>
                         </li>
                     @endforeach
                 @endif
@@ -67,10 +71,10 @@
             </div>
 
             <div class="pb-flex pb-items-center pb-gap-4">
-                <input id="playlist-time-range" type="range" value="0" />
+                <input class="time-range" id="playlist-time-range" type="range" value="0" />
 
                 <div class="volume pb-flex pb-items-center">
-                    <input id="playlist-volume-range" type="range" value="100" />
+                    <input class="time-range" id="playlist-volume-range" type="range" value="100" />
                     <svg class="pb-h-8 pb-w-8" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 010 12.728M16.463 8.288a5.25 5.25 0 010 7.424M6.75 8.25l4.72-4.72a.75.75 0 011.28.53v15.88a.75.75 0 01-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.01 9.01 0 012.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75z"></path>
                     </svg>
