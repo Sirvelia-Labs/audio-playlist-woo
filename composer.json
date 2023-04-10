@@ -28,7 +28,8 @@
 	"name": "sirvelia-labs/audio-playlist-woo",
 	"require": {
 		"jenssegers/blade": "1.4.0",
-		"php": "\u003e=7.4"
+		"php": "\u003e=7.4",
+		"htmlburger/carbon-fields": "^3.6"
 	},
 	"scripts": {
 		"post-create-project-cmd": [
