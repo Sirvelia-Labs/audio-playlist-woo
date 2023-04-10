@@ -1,0 +1,61 @@
+# Copyright (C) 2023 Sirvelia
+# This file is distributed under the GPL-3.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: Audio Playlist for WooCommerce 1.1.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/audio-playlist-woo\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2023-04-10T18:28:20+00:00\n"
+"PO-Revision-Date: 2023-04-10T18:28:20+00:00\n"
+"X-Generator: WP-CLI 2.6.0\n"
+
+#. Plugin Name of the plugin
+msgid "Audio Playlist for WooCommerce"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://github.com/Sirvelia/Audio-Playlist-for-WooCommerce"
+msgstr ""
+
+#. Description of the plugin
+msgid "Audio player with playlist for WooCommerce products."
+msgstr ""
+
+#. Author of the plugin
+msgid "Sirvelia"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://sirvelia.com/"
+msgstr ""
+
+#: resources/cache/5caae687a6537a46b8185b109bf0ddb15d03be49.php:6
+#: resources/views/audio-player.blade.php:6
+msgid "Remove all"
+msgstr ""
+
+#: resources/cache/5caae687a6537a46b8185b109bf0ddb15d03be49.php:16
+#: resources/cache/5caae687a6537a46b8185b109bf0ddb15d03be49.php:71
+#: resources/views/audio-player.blade.php:16
+#: resources/views/audio-player.blade.php:69
+msgid "Go to product"
+msgstr ""
+
+#: resources/cache/5caae687a6537a46b8185b109bf0ddb15d03be49.php:18
+#: resources/views/audio-player.blade.php:18
+msgid "Remove song"
+msgstr ""
+
+#: resources/cache/5caae687a6537a46b8185b109bf0ddb15d03be49.php:60
+#: resources/views/audio-player.blade.php:59
+msgid "No song selected"
+msgstr ""
+
+#: resources/cache/5caae687a6537a46b8185b109bf0ddb15d03be49.php:89
+#: resources/views/audio-player.blade.php:87
+msgid "Open Playlist"
+msgstr ""
